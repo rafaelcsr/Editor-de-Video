@@ -348,3 +348,12 @@ python3 "$SK/scripts/verify-render.py" --render "renders/<projeto>.mp4" --index 
 - Um resultado de que o usuário gostou vira um bloco reutilizável: guarde o HTML em `$SK/assets/blocos/` e descreva em uma linha.
 - Rotina de passada cabe num modelo médio; um formato novo, ou algo que este arquivo não cobre, merece o modelo mais forte.
   Os tokens vão para snapshots e saída de ferramentas: um snapshot por momento, scripts em vez de redigitar.
+
+## Economia de processo (pedido do usuário)
+
+Gaste pouco no processo, **sem baixar a qualidade do vídeo** (resolução, CRF 16, checagens obrigatórias ficam iguais).
+- Não releia arquivos já lidos na sessão; leia só o trecho necessário (`sed -n`, `grep`).
+- Não refaça testes nem renders à toa: testes só depois de mexer em script; render só depois de `check`, `safe-area.mjs`
+  e snapshots aprovados. Para conferir um ajuste pequeno, use `snapshot --at` no instante, não um render novo.
+- Imagens de conferência: poucas e pequenas (tiras de 270x480 ou menores, uma folha por etapa).
+- Respostas curtas: o que foi feito, o caminho do arquivo, o que precisa de decisão.

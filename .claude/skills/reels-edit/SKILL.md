@@ -1,6 +1,6 @@
 ---
 name: reels-edit
-description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Use quando o usuário pedir "edita esse reel", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md que fica ao lado desta skill (.claude/skills/ESTILO.md): ele vence qualquer outra regra.
+description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Use quando o usuário pedir "edita esse reel", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md que fica dentro desta skill (.claude/skills/reels-edit/ESTILO.md): ele é a fonte única do estilo e vence qualquer outra regra.
 ---
 
 # Editor de Reels
@@ -10,13 +10,13 @@ o B-roll, o som e um MP4 vertical. Tudo roda na máquina (HyperFrames = Chrome +
 
 ## Regra zero: ler o ESTILO.md
 
-**Antes de qualquer edição, leia `.claude/skills/ESTILO.md`** (o arquivo fica ao lado da pasta `reels-edit/`).
+**Antes de qualquer edição, leia `.claude/skills/reels-edit/ESTILO.md`** (`$SK/ESTILO.md`). É a **fonte única do estilo**: cores, fontes, título, legenda, câmera, ritmo, som, formatos e a lista do que nunca se faz. Este SKILL.md cuida só da técnica.
 
 - **Ele vence qualquer outra regra**: este SKILL.md, os scripts, as skills do HyperFrames. Se o ESTILO.md diz uma coisa e
   este arquivo diz outra, vale o ESTILO.md. Quando o conflito mudar o resultado, avise em uma linha qual regra foi vencida.
 - **Se o arquivo não existir**, pare e avise o usuário. Não invente um estilo.
-- **Se existir mas estiver sem regras preenchidas** (só o modelo), siga este SKILL.md e diga no começo que o estilo ainda
-  não foi definido.
+- **Valores marcados `[confirmar]`** no ESTILO.md: use e diga na entrega que foi um palpite.
+- **Escolha o formato** da seção 4 do ESTILO.md (opinião, resposta a pergunta, tutorial com B-roll, história, lista) e siga a receita; se o pedido não deixar claro, pergunte.
 - Releia o arquivo a cada edição nova: o usuário pode ter mudado.
 
 ## O que sai (especificação)
@@ -197,20 +197,22 @@ render não deve depender de internet. Todo `<audio>` precisa de `id`, ou fica m
 
 ### Regras do texto e da legenda
 
+O *visual* (cores, fonte, tamanho, posição, quantas palavras, animação, câmera, ritmo) vem **só do ESTILO.md**. Aqui ficam
+os limites técnicos que valem sempre:
+
 - **Tudo em português do Brasil**, com acento e cedilha corretos, `R$ 1.200,50`, `12%`, vírgula decimal. Nada de inglês na
-  tela, exceto nome de marca ou ferramenta como se escreve. Se a fala citar um termo em inglês, a legenda mantém o termo.
-- **Legenda palavra por palavra a partir de `transcript.json`** (tempos exatos), só nas palavras mantidas. Uma ou duas linhas,
-  poucas palavras por linha. Confira a ortografia contra o que foi dito; o ASR erra nome próprio.
-- **Área segura (obrigatória): x 60 a 940, y 220 a 1500.** Isso vale para o *texto*: títulos, legendas, números, selos. Fica
-  fora dela só textura e decoração, e marque com `data-safe-ignore`. Largura útil de um bloco de texto: **880 px** (x 60–940)
-  no máximo, com margem de respiro. Legenda na parte baixa da faixa (perto de y 1400), não colada em 1500.
-- **Nada de texto menor que 28 px**; título de gancho de 88 a 110 px. Corte palavras, não encolha a fonte.
-- Texto sobre vídeo claro precisa de contraste (o `check` reprova abaixo de 3:1): use um painel escuro translúcido ou
-  gradiente atrás. O rosto nunca fica debaixo de um cartão.
-- Entrada de 0,4 s `power2.out`, saída de 0,35 s `power2.in`; sem quique, sem giro 3D, desfoque não anima. Um elemento
-  principal por vez.
-- Ritmo mais rápido que o horizontal: um novo momento a cada 2 a 4 s (empurrão de câmera, corte para B-roll, texto novo).
-  Câmera: empurre `#bg-video` com `scale` (1.00 → 1.08) na frase de impacto; o rosto continua no terço superior.
+  tela, exceto nome de marca ou ferramenta como se escreve.
+- **Legenda palavra por palavra a partir de `transcript.json`** (tempos exatos), só nas palavras mantidas. Confira a
+  ortografia contra o que foi dito; o ASR erra nome próprio.
+- **Área segura (obrigatória): x 60 a 940, y 220 a 1500**, para todo *texto*: títulos, legendas, números, selos. Fica fora
+  dela só textura e decoração, e marque com `data-safe-ignore`. Largura útil de um bloco de texto: **880 px**. Se o ESTILO.md
+  trouxer outros quatro números, passe-os a `safe-area.mjs` (`--x0 --x1 --y0 --y1`).
+- **Nada de texto menor que 28 px.** Corte palavras, não encolha a fonte.
+- **Fontes só as de `assets/fonts/` que tenham os glifos do português** (Montserrat). **A DM Sans que veio do kit antigo não tem
+  acentos nem `%`, `$`, `?`, `!`: não use.** Copie os `.woff2` para `public/fonts/` e declare com `@font-face`; nunca pelo CDN.
+- Texto sobre vídeo claro precisa de contraste (o `check` reprova abaixo de 3:1): sombra, painel ou gradiente conforme o ESTILO.md.
+  O rosto nunca fica debaixo de um texto ou cartão.
+- Entradas e saídas: sem quique, sem giro 3D, desfoque não anima; durações e eases conforme o ESTILO.md.
 
 ### B-roll
 
@@ -221,15 +223,8 @@ Nada de logo ou marca registrada de terceiros sem permissão do usuário.
 
 ## Som (só grátis)
 
-**O silêncio é o padrão.** Um efeito precisa merecer o lugar: o que na tela faz esse barulho? Um ou dois por reel.
-
-| Efeito | Pode em | Volume | Nunca em |
-|---|---|---|---|
-| Digitação | digitação real na tela, pelo tempo exato dela | 0,22 | qualquer coisa que não seja teclado |
-| Pop | logo ou ícone aparecendo | 0,34 | texto ou legenda |
-| Clique | clique de cursor na tela | 0,28 | o que não tem cursor |
-| Notificação | notificação de celular, literalmente | a gosto | um número que entra, um destaque |
-| Whoosh | nada confirmado | | **texto de qualquer tipo**: texto entra em movimento, nunca em varredura |
+**Quanto e onde pôr som, e em que volume, está no ESTILO.md (seção 3.7).** Aqui ficam só as fontes e a técnica de mixagem.
+Um efeito sonoro só entra se um objeto na tela fizer aquele barulho.
 
 **Fontes permitidas, e só estas:**
 1. **Biblioteca do HyperFrames**: `npx hyperframes skills update media-use` instala 19 efeitos em `.claude/skills/media-use/audio/assets/sfx/`
@@ -243,8 +238,8 @@ pedir uma faixa que não é grátis, avise e ofereça a alternativa. Guarde em `
 
 **Mixagem:** normalize cada arquivo de efeito para -3 dBFS de pico (leia `max_volume` com `ffmpeg -i x.mp3 -af volumedetect -f null -`)
 e use `data-volume` só para a mistura. Alinhe o pico audível, não o início do arquivo.
-**Música:** instrumental, baixa sob a voz (cerca de -18 a -20 dB abaixo da fala, `data-volume` 0.10 a 0.14 como ponto de partida),
-com fade de entrada e saída. Voz em torno de **-14 LUFS**, pico real abaixo de -1 dBTP (confira com `ebur128`). Para abaixar
+**Música** (só se o ESTILO.md permitir): nível e tipo conforme o ESTILO.md, com fade de entrada e saída. Voz em torno de
+**-14 LUFS**, pico real abaixo de -1 dBTP (confira com `ebur128`). Para abaixar
 a música quando a voz fala, num master pronto (mantenha uma cópia sem música):
 
 ```bash

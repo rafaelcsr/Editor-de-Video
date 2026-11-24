@@ -32,7 +32,7 @@ for src, dst in ((os.path.join(SK, "assets", "vendor", "gsap.min.js"), "gsap.min
     if os.path.exists(src):
         shutil.copyfile(src, os.path.join(pub, dst))
 click = None
-for c in (os.path.join(pub, "click.mp3"), os.path.join(SK, "..", "media-use", "audio", "assets", "sfx", "click.mp3"),
+for c in (os.path.join(pub, "click.mp3"), os.path.join(SK, "assets", "sfx", "clique", "clique-mouse.mp3"), os.path.join(SK, "..", "media-use", "audio", "assets", "sfx", "click.mp3"),
           os.path.expanduser("~/.claude/skills/media-use/audio/assets/sfx/click.mp3")):
     if os.path.exists(c):
         if os.path.abspath(c) != os.path.abspath(os.path.join(pub, "click.mp3")):

@@ -1,0 +1,274 @@
+[
+ {
+  "arquivo": "whoosh/whoosh-sutil.mp3",
+  "categoria": "whoosh",
+  "duracao_s": 1.8,
+  "uso": "mudança de layout (o padrão da DIRECAO 13)",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "rescopicsound-modern-interface-swoosh-whoosh-small-02-230467.mp3"
+ },
+ {
+  "arquivo": "whoosh/whoosh-rapido.mp3",
+  "categoria": "whoosh",
+  "duracao_s": 1.12,
+  "uso": "troca de tela em trecho de humor/ritmo rápido",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "universfield-fast-swoosh-04-192899.mp3"
+ },
+ {
+  "arquivo": "whoosh/whoosh-swipe.mp3",
+  "categoria": "whoosh",
+  "duracao_s": 1.02,
+  "uso": "entrada/saída do vídeo original",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "floraphonic-movement-swipe-whoosh-3-186577.mp3"
+ },
+ {
+  "arquivo": "whoosh/whoosh-zoom.mp3",
+  "categoria": "whoosh",
+  "duracao_s": 2.23,
+  "uso": "zoom de ênfase forte (raro)",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "floraphonic-futuristic-zoom-whoosh-1-183976.mp3"
+ },
+ {
+  "arquivo": "whoosh/slide-entra.mp3",
+  "categoria": "whoosh",
+  "duracao_s": 1.99,
+  "uso": "cartão/caixinha entrando",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "soundshelfstudio-ui-menu-slide-in-516940.mp3"
+ },
+ {
+  "arquivo": "whoosh/slide-sai.mp3",
+  "categoria": "whoosh",
+  "duracao_s": 1.99,
+  "uso": "cartão/caixinha saindo",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "soundshelfstudio-ui-menu-slide-out-516941.mp3"
+ },
+ {
+  "arquivo": "pop/pop-bolha-1.mp3",
+  "categoria": "pop",
+  "duracao_s": 1.06,
+  "uso": "momento cômico/absurdo, logo ou ícone aparecendo",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "dragon-studio-bubble-pop-406640.mp3"
+ },
+ {
+  "arquivo": "pop/pop-bolha-2.mp3",
+  "categoria": "pop",
+  "duracao_s": 0.98,
+  "uso": "idem, mais curto",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "universfield-bubble-pop-04-323580.mp3"
+ },
+ {
+  "arquivo": "pop/pop-bolha-3.mp3",
+  "categoria": "pop",
+  "duracao_s": 1.03,
+  "uso": "idem",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "universfield-bubble-pop-07-487896.mp3"
+ },
+ {
+  "arquivo": "pop/pop-bolha-4.mp3",
+  "categoria": "pop",
+  "duracao_s": 3.65,
+  "uso": "idem (arquivo longo: corte o silêncio)",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "soundreality-bubble-pop-424583.mp3"
+ },
+ {
+  "arquivo": "pop/pop-bolha-reverb.mp3",
+  "categoria": "pop",
+  "duracao_s": 3.65,
+  "uso": "pop cômico com cauda",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "soundreality-bubble-pop-reverb-424582.mp3"
+ },
+ {
+  "arquivo": "pop/pop-clique-minimal.mp3",
+  "categoria": "pop",
+  "duracao_s": 1.06,
+  "uso": "palavra-síntese aparecendo (discreto)",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "floraphonic-minimal-pop-click-ui-3-198303.mp3"
+ },
+ {
+  "arquivo": "clique/clique-mouse.mp3",
+  "categoria": "clique",
+  "duracao_s": 0.53,
+  "uso": "PAUSA do react (padrão do react-compose)",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "universfield-computer-mouse-click-352734.mp3"
+ },
+ {
+  "arquivo": "clique/clique-suave.mp3",
+  "categoria": "clique",
+  "duracao_s": 1.44,
+  "uso": "clique de cursor na tela",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "universfield-soft-interface-click-126517.mp3"
+ },
+ {
+  "arquivo": "clique/clique-grave.mp3",
+  "categoria": "clique",
+  "duracao_s": 1.23,
+  "uso": "ênfase discreta",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "soundshelfstudio-ui-click-deep-512211.mp3"
+ },
+ {
+  "arquivo": "clique/toque-botao.mp3",
+  "categoria": "clique",
+  "duracao_s": 1.06,
+  "uso": "toque em tela de celular",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "vadim_makes_sound-soft-app-button-tap-sound-2-547872.mp3"
+ },
+ {
+  "arquivo": "clique/tick-hover.mp3",
+  "categoria": "clique",
+  "duracao_s": 0.14,
+  "uso": "marcação mínima",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "turning_pages-soft-ui-hover-tick-608625.mp3"
+ },
+ {
+  "arquivo": "clique/tick-checkbox.mp3",
+  "categoria": "clique",
+  "duracao_s": 1.7,
+  "uso": "item de lista marcado",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "soundshelfstudio-ui-checkbox-tick-517465.mp3"
+ },
+ {
+  "arquivo": "clique/interface.mp3",
+  "categoria": "clique",
+  "duracao_s": 2.12,
+  "uso": "elemento de interface aparecendo",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "universfield-interface-124464.mp3"
+ },
+ {
+  "arquivo": "clique/beep-menu.mp3",
+  "categoria": "clique",
+  "duracao_s": 1.27,
+  "uso": "alerta/aviso neutro",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "rescopicsound-ui-beep-menu-neutral-228333.mp3"
+ },
+ {
+  "arquivo": "clique/ping-vidro.mp3",
+  "categoria": "clique",
+  "duracao_s": 1.54,
+  "uso": "notificação, pergunta final em destaque",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "soundshelfstudio-ui-soft-glass-ping-526562.mp3"
+ },
+ {
+  "arquivo": "teclado/tecla-enter-1.mp3",
+  "categoria": "teclado",
+  "duracao_s": 4.21,
+  "uso": "enter de teclado na tela",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "sennafoxy-enter-button-mechanical-keyboard-14388.mp3"
+ },
+ {
+  "arquivo": "teclado/tecla-enter-2.mp3",
+  "categoria": "teclado",
+  "duracao_s": 2.11,
+  "uso": "idem",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "vadim_makes_sound-mechanical-keyboard-single-enter-key-1-547834.mp3"
+ },
+ {
+  "arquivo": "teclado/tecla-enter-3.mp3",
+  "categoria": "teclado",
+  "duracao_s": 1.87,
+  "uso": "idem",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "vadim_makes_sound-single-mechanical-keyboard-enter-key-press-546557.mp3"
+ },
+ {
+  "arquivo": "teclado/digitacao-mecanica.mp3",
+  "categoria": "teclado",
+  "duracao_s": 42.34,
+  "uso": "digitação real na tela (42 s: corte no tempo exato)",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "tahsin_manjir-mechanical-keyboard-typing-sound-asmr-321555.mp3"
+ },
+ {
+  "arquivo": "teclado/digitacao-iphone.mp3",
+  "categoria": "teclado",
+  "duracao_s": 22.07,
+  "uso": "digitação em celular, print de conversa (22 s: corte)",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "u_a4gfvwagf1-iphone-keyboard-typing-sound-effect-336778.mp3"
+ },
+ {
+  "arquivo": "teclado/texto-processando.mp3",
+  "categoria": "teclado",
+  "duracao_s": 6.31,
+  "uso": "texto se montando na tela",
+  "licenca": "Pixabay Content License (pixabay.com; uso livre, sem atribuição)",
+  "original": "rescopicsound-ui-processing-data-menu-modern-interface-text-sequence-01-230489.mp3"
+ },
+ {
+  "arquivo": "impacto/impacto-bass.mp3",
+  "categoria": "impacto",
+  "duracao_s": 1.18,
+  "uso": "impacto discreto de ênfase (volume baixo)",
+  "licenca": "origem não confirmada: usar só se você confirmar que tem direito",
+  "original": "BassCRack.MP3"
+ },
+ {
+  "arquivo": "impacto/impacto-cinestrike.mp3",
+  "categoria": "impacto",
+  "duracao_s": 1.59,
+  "uso": "virada forte do argumento (raro)",
+  "licenca": "origem não confirmada: usar só se você confirmar que tem direito",
+  "original": "CineStrike.MP3"
+ },
+ {
+  "arquivo": "impacto/whoosh-cyber.mp3",
+  "categoria": "impacto",
+  "duracao_s": 1.38,
+  "uso": "transição marcada (evitar: estética gamer)",
+  "licenca": "origem não confirmada: usar só se você confirmar que tem direito",
+  "original": "Cyber Swift .MP3"
+ },
+ {
+  "arquivo": "impacto/ripple-1.mp3",
+  "categoria": "impacto",
+  "duracao_s": 1.2,
+  "uso": "textura de surpresa/absurdo",
+  "licenca": "origem não confirmada: usar só se você confirmar que tem direito",
+  "original": "Ripple Textures.MP3"
+ },
+ {
+  "arquivo": "impacto/ripple-2.mp3",
+  "categoria": "impacto",
+  "duracao_s": 1.33,
+  "uso": "idem",
+  "licenca": "origem não confirmada: usar só se você confirmar que tem direito",
+  "original": "Ripple Texture 2.MP3"
+ },
+ {
+  "arquivo": "impacto/warp-alien.mp3",
+  "categoria": "impacto",
+  "duracao_s": 1.49,
+  "uso": "absurdo extremo (raro; evitar)",
+  "licenca": "origem não confirmada: usar só se você confirmar que tem direito",
+  "original": "Alienated Warps.MP3"
+ },
+ {
+  "arquivo": "impacto/glitch-distorcao.mp3",
+  "categoria": "impacto",
+  "duracao_s": 1.72,
+  "uso": "EVITAR: o ESTILO proíbe glitch",
+  "licenca": "origem não confirmada: usar só se você confirmar que tem direito",
+  "original": "Distortion Glitch.MP3"
+ }
+]

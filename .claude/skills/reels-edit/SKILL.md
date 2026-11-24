@@ -300,6 +300,10 @@ Nada de logo ou marca registrada de terceiros sem permissão do usuário.
 **Quanto e onde pôr som, e em que volume, está no ESTILO.md (seção 3.7).** Aqui ficam só as fontes e a técnica de mixagem.
 Um efeito sonoro só entra se um objeto na tela fizer aquele barulho.
 
+**Biblioteca própria (primeira escolha):** `$SK/assets/sfx/` (34 efeitos já normalizados a -3 dBFS, por categoria: whoosh,
+pop, clique, teclado, impacto). Veja `assets/sfx/SFX.md` para o uso de cada um e a licença; os de `impacto/` têm origem
+não confirmada. O clique da pausa do react é `clique/clique-mouse.mp3`.
+
 **Fontes permitidas, e só estas:**
 1. **Biblioteca do HyperFrames**: `npx hyperframes skills update media-use` instala 19 efeitos em `.claude/skills/media-use/audio/assets/sfx/`
    (typing, click, pop, ping, notification, chime e outros; licença Pixabay Content License, sem atribuição).

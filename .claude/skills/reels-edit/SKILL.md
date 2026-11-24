@@ -1,6 +1,6 @@
 ---
 name: reels-edit
-description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Use quando o usuário pedir "edita esse reel", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md que fica dentro desta skill (.claude/skills/reels-edit/ESTILO.md): ele é a fonte única do estilo e vence qualquer outra regra.
+description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Também monta React com pausa (tela dividida com o vídeo original e você reagindo, pausa, você em tela cheia), com crédito e limite de trecho. Use quando o usuário pedir "edita esse reel", "faz o react desse vídeo", "reage a esse vídeo", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md que fica dentro desta skill (.claude/skills/reels-edit/ESTILO.md): ele é a fonte única do estilo e vence qualquer outra regra.
 ---
 
 # Editor de Reels
@@ -63,6 +63,7 @@ em `OK`. Rode de novo ao mexer em qualquer script.
 
 | Entrada | Rota |
 |---|---|
+| **React com pausa** (o original + você reagindo + suas falas) | a rota React (abaixo) |
 | Um clipe bruto (retakes e tudo) | Etapa de corte → Montagem vertical → Checagens → Render → Entrega |
 | Vários clipes brutos de um mesmo reel | `ingest.py` junta em `source.mp4` → mesma rota |
 | Um corte já pronto (sem zoom, legenda ou transição gravados) | pula a etapa de corte; vai direto ao "Corte plano para vertical" |
@@ -105,6 +106,9 @@ em `OK`. Rode de novo ao mexer em qualquer script.
 | `stutter-scan.py` | gagueiras e retakes no texto do corte plano, segunda opinião | `--transcript --out-dir` |
 | `cutlist-to-edl.py` | o cut-list como EDL para a página de revisão (`node build-edl-review.mjs`) | `--cut-list --out` |
 | `phrase-times.py` | onde uma frase é dita (início da 1ª palavra, fim da última) | `--transcript "frase" ... [--after T]` |
+| `sync-tracks.py` | onde o original começa dentro da sua gravação de reação (correlação de áudio) | `--a reacao.mp4 --b original.mp4 [--window 180]`; `offset_b_after_a` = `reacao_offset` |
+| `react-plan.py` | linha do tempo do react (trecho → pausa → fala) e as regras: crédito, trecho ≤ 12 s, sua fala ≥ 60%, 2–4 pausas, 45–90 s; congela os quadros de pausa | `--spec react.json --public DIR [--max-trecho 12] [--min-share 0.6]`; exit 1 = corrija |
+| `react-compose.py` | `react-plan.json` → `public/index.html` no layout do react (dividida em cima/embaixo → pausa → você em tela cheia) | `--plan --public [--orig-pos "50% 30%"] [--react-pos "50% 40%"]` |
 | `broll-conform.py` | clipe de banco de imagens, clipe seu ou foto → cutaway **1080x1920**, 30 fps, sem áudio, BT.709 | `--in --out [--start] [--dur] [--push 1.08] [--grade] [--crop-x] [--vf FILTROS]` |
 | `safe-area.mjs` | **área segura**: abre a composição no Chrome e confere que todo texto visível está em x 60–940, y 220–1500 | `--index [--step 0.25] [--at T,..] [--x0 --x1 --y0 --y1] [--json]`; sai com 1 se algo passar |
 | `verify-render.py` | confere o **arquivo** renderizado: tamanho, 30 fps, H.264/AAC, BT.709, capa, abertura, preto, duração, A/V, palavras cortadas | `--render [--index] [--res 1080x1920] [--fps 30] [--words --kept] [--out]`; sai com 1 em FAIL |
@@ -164,6 +168,43 @@ ffmpeg -y -v error -i "$VIDEO" -map 0:v:0 -map 0:a:0 \
   -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv \
   -movflags +faststart -c:a aac -b:a 256k -ar 48000 "$W/public/input-video.mp4"
 ```
+
+## Rota React com pausa (formato 4.0 do ESTILO.md)
+
+O que o usuário entrega: o vídeo original, a gravação de reação (ele assistindo, com o som do original no ar), **um arquivo
+de fala por pausa** e os tempos das pausas. Se faltar a reação, peça; não improvise a caixa de cima.
+
+```bash
+mkdir -p "$W/raw" "$W/public" renders     # raw/original.mp4, raw/reacao.mp4, raw/fala-1.mp4 ... raw/fala-N.mp4
+# 1. o original e a reação em 30 fps com quadro-chave denso (o original fica no tamanho dele; o layout recorta)
+for f in original reacao; do ffmpeg -y -v error -i "$W/raw/$f.mp4" -r 30 -c:v libx264 -crf 16 -preset fast -g 30 -keyint_min 30 \
+  -pix_fmt yuv420p -color_primaries bt709 -color_trc bt709 -colorspace bt709 -c:a aac -b:a 256k -ar 48000 "$W/public/$f.mp4"; done
+# 2. onde o original começa dentro da reação
+python3 "$SK/scripts/sync-tracks.py" --a "$W/public/reacao.mp4" --b "$W/public/original.mp4"    # offset_b_after_a -> reacao_offset
+# 3. cada fala passa pela Etapa de corte, com --size 1080x1920, saindo em public/fala-N.mp4
+#    (transcrição com --engine parakeet --language pt; o paper-cut limpa retakes)
+# 4. o original transcrito (para escolher as pausas e, se ele não tiver legenda própria, legendar a fala dele)
+ffmpeg -y -v error -i "$W/public/original.mp4" -vn -acodec pcm_s16le -ar 16000 -ac 1 "$W/audio-original.wav"
+npx hyperframes transcribe "$W/audio-original.wav" -d "$W/original-tx" --engine parakeet --language pt --json
+# 5. o plano (escreva react.json; veja o formato no topo de react-plan.py) e as regras
+python3 "$SK/scripts/react-plan.py" --spec "$W/react.json" --public "$W/public"       # FAIL = corrija antes de seguir
+# 6. a composição, depois as legendas da sua fala (legenda de destaque do ESTILO.md, palavra por palavra do transcript de cada fala,
+#    deslocado pelo início da fala no plano), a legenda do original se ele não tiver, e o clique de pausa já vem pronto
+python3 "$SK/scripts/react-compose.py" --plan "$W/react-plan.json" --public "$W/public"
+# 7. daí em diante: Checagens, snapshots e render (abaixo), iguais a qualquer reel
+```
+
+- **Ponto A do react:** mostre `REACT-PLAN.md` (trechos, pausas, sua parte em %) e os quadros `pausa-N.png` antes de compor.
+  Escolha as pausas no **final de uma frase** do original (pelo transcript), nunca no meio de uma palavra.
+- **Ajuste de enquadramento:** `--orig-pos` move o original na metade de baixo (ex.: `"50% 20%"` sobe o rosto);
+  `--react-pos` move você na caixa de cima: deixe **espaço acima da sua cabeça** para o título (y 236–370).
+- **Normalize o volume** do original e das falas para a mesma altura (≈ −14 LUFS cada, `npx hyperframes normalize-audio`
+  ou `loudnorm`) antes de compor: o original baixado costuma vir mais alto ou mais baixo que a sua voz.
+- **Regras que o `react-plan.py` aplica** vêm do ESTILO.md 4.0: crédito na tela, trecho ≤ 12 s, sua fala ≥ 60%, 2 a 4
+  pausas, 45 a 90 s. Não passe por cima de um FAIL: encurte o trecho ou fale mais.
+- **No HyperFrames, todo `<video>` fica no nível de cima** da composição (nunca dentro de um `<div>` com `data-start`):
+  o `react-compose.py` já faz assim e desenha a moldura como camada separada.
+- Render de 33 s levou ~2 min aqui (CPU, sem GPU). Conte com ~3 a 6 min para um react de 60 a 90 s.
 
 ## Montagem vertical com o HyperFrames (sem `compose.py`)
 

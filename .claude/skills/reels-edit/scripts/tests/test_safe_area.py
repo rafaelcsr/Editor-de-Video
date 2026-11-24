@@ -39,6 +39,10 @@ class SafeArea(unittest.TestCase):
                          '<p data-safe-ignore style="position:absolute;left:0;top:1800px;font:60px sans-serif">marca</p>'))
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
+    def test_text_outside_its_clip_window_is_skipped(self):
+        r = self.go(page('<p class="clip" data-start="5" data-duration="2" style="position:absolute;left:0;top:50px;font:60px sans-serif">depois</p>'))
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+
     def test_wrong_canvas_fails(self):
         r = self.go(page("", 1920, 1080))
         self.assertEqual(r.returncode, 1)

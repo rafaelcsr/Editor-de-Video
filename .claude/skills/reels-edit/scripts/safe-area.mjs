@@ -61,6 +61,15 @@ for (const t of times) {
       const el = n.parentElement;
       if (!el || ["SCRIPT", "STYLE", "NOSCRIPT", "TITLE"].includes(el.tagName)) continue;
       if (el.closest("[data-safe-ignore]")) continue;
+      // outside its own clip window (data-start/data-duration on it or an ancestor) the runtime hides it: skip
+      let off = false;
+      for (let e = el; e; e = e.parentElement) {
+        if (e.hasAttribute && e.hasAttribute("data-start") && e.hasAttribute("data-duration") && !e.hasAttribute("data-composition-id")) {
+          const st = parseFloat(e.getAttribute("data-start")), du = parseFloat(e.getAttribute("data-duration"));
+          if (t < st - 1e-6 || t >= st + du - 1e-6) { off = true; break; }
+        }
+      }
+      if (off) continue;
       (byEl.get(el) || byEl.set(el, []).get(el)).push(n);
     }
     for (const [el, nodes] of byEl) {

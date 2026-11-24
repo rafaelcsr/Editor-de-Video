@@ -11,10 +11,23 @@
 
 ---
 
+## 0. Posicionamento (decidido em 2026-11-24)
+
+- **Tema:** relacionamento entre homem e mulher, com assuntos polêmicos. A tese: hoje muitos homens estão fragilizados, e
+  as mulheres têm cada vez mais dificuldade de encontrar homem com postura de homem.
+- **Ângulo:** **a verdade incômoda para os dois lados.** Eu cobro postura do homem **e** coerência da mulher. Nunca um lado só.
+- **Perfil:** o **meu perfil pessoal**, para aproveitar o público que já tenho. Tudo que eu posto convive com o meu nome
+  profissional: polêmica de ideia sim, ataque pessoal nunca.
+- **Carro-chefe:** **React com pausa** (4.0): pego um vídeo, pauso no momento certo e dou a minha interpretação.
+  Também posto vídeos solo (4.1, 4.2, 4.4, 4.5), às vezes sem regularidade.
+- **Palavrão:** **eu uso.** Na fala vai como sai; na legenda vai **mascarado com `#`** (`P#RRA`) [confirmar a máscara na legenda].
+
+---
+
 ## 1. O meu estilo em uma frase
 
-**Eu falo direto para a câmera, num lugar real, sem cortes bonitos: a pessoa é o vídeo, e o texto na tela é uma única
-ideia simples, limpa e fora do meu rosto.**
+**Eu pego o assunto que todo mundo evita entre homem e mulher, paro o vídeo no momento exato e falo direto para a câmera
+a verdade incômoda para os dois lados, sem enfeite: a pessoa é o vídeo, e o texto na tela é uma ideia só, forte e fora do meu rosto.**
 
 ---
 
@@ -39,6 +52,18 @@ ideia simples, limpa e fora do meu rosto.**
    um meio-termo de cortes aleatórios. *Porquê:* mudar de ritmo no meio parece erro.
 10. **O que a plataforma esconde, eu não uso.** Tudo dentro da área segura (x 60–940, y 220–1500). *Porquê:* botões, nome e
     legenda do post cobrem o resto.
+11. **A verdade incômoda é para os dois lados.** Em todo vídeo, se eu cobro um lado, mostro onde o outro também erra (no
+    mesmo vídeo ou na série). *Porquê:* engaja homens e mulheres (as duas metades comentam), me tira da caixa de
+    "mais um red pill" e protege o meu nome profissional.
+12. **Eu critico comportamento, nunca o grupo.** "Esse comportamento afasta homem de verdade" — sim. "Mulher é tudo X" ou
+    "homem hoje é tudo Y" — não. *Porquê:* as regras da Meta protegem gênero contra ataque generalizado; vídeo assim cai ou
+    perde alcance, e o perfil inteiro pode ser limitado.
+13. **A polêmica é na interpretação, não no insulto.** O vídeo provoca porque a minha leitura é inesperada e bem
+    argumentada, não porque eu xingo alguém. *Porquê:* polêmica de ideia gera debate nos comentários; ofensa gera denúncia.
+14. **No react, a minha fala é o produto.** O vídeo alheio é só a pergunta; eu sou a resposta. *Porquê:* é o que torna o uso
+    legítimo (crítica, com crédito) e é o que faz alguém seguir **a mim**, não ao vídeo original.
+15. **Toda polêmica termina numa pergunta para o público.** "Você concorda com ela ou comigo?" *Porquê:* comentário é o que
+    leva o vídeo para fora dos meus seguidores.
 
 ---
 
@@ -90,7 +115,7 @@ Uma família só por vídeo. Se quiser outra fonte, ela precisa ter os glifos `�
 
 Duas famílias nas referências; escolha **uma por vídeo**:
 
-| | **Legenda limpa** (R3) [em 1 de 4, padrão para opinião/conselho] | **Legenda de destaque** (R4) [em 1 de 4, para tutorial/humor] |
+| | **Legenda limpa** (R3) [em 1 de 4, padrão para opinião/conselho] | **Legenda de destaque** (R4) [padrão da minha fala no **react** e em tutorial/humor] |
 |---|---|---|
 | Palavras por vez | **1 a 3** (média ~2; frases quebram em "dela." / "seguir quem" / "ela quiser,") | **2 a 4** |
 | Caixa | **sentence case**, com pontuação, igual à fala | **CAIXA ALTA** |
@@ -103,8 +128,8 @@ Duas famílias nas referências; escolha **uma por vídeo**:
 - **Sempre dentro da área segura:** `x 60–940`, `y 220–1500`. A referência R4 põe a legenda a ~78% da altura (≈ y 1500 em
   1080x1920), no limite: **eu subo para y ≈ 1350** para ficar dentro da área.
 - **Nunca mais de 4 palavras** por vez, nunca duas linhas, nunca menos de 28 px.
-- **Acento e pontuação corretos.** Nome próprio e marca como se escrevem. Palavrão: **mascarado com `#`** como em R4
-  (`F#DA-SE`) [confirmar se você usa palavrão].
+- **Acento e pontuação corretos.** Nome próprio e marca como se escrevem. **Palavrão:** eu falo; na legenda vai
+  **mascarado com `#`** como em R4 (`P#RRA`, `C#RALHO`, `F#DA-SE`), sem bip no áudio.
 - **Marca d'água:** só um @ pequeno e discreto (R3: handle cinza claro a ~40% de opacidade sobre a roupa); nunca logo grande.
 
 ### 3.5 Câmera e enquadramento
@@ -143,11 +168,58 @@ Duas famílias nas referências; escolha **uma por vídeo**:
 
 ## 4. Os formatos de vídeo e a receita de cada um
 
-Os quatro primeiros saem diretamente das referências; **História** e **Lista** não aparecem nelas: são o mesmo estilo
-aplicado a outro conteúdo, e ficam **[a confirmar]** até você mandar um exemplo.
+Os formatos saem das referências; **História** e **Lista** não aparecem nelas: são o mesmo estilo aplicado a outro
+conteúdo, e ficam **[a confirmar]** até você mandar um exemplo. O **React com pausa** é o carro-chefe.
 
-### 4.1 Opinião / conselho (fala direta com título fixo): R1 e R3
-**Quando:** uma ideia forte dita direto, sem demonstrar nada. 30 a 70 s.
+### 4.0 React com pausa (carro-chefe)
+**Quando:** um vídeo de outro criador (ou figura pública) sobre relacionamento que dá margem a uma interpretação polêmica.
+**45 a 90 s.** A skill monta com `react-plan.py` + `react-compose.py` (veja o SKILL.md, rota React).
+
+**O que eu gravo:**
+1. **O original**, baixado para `raw/original.mp4`.
+2. **A reação** (`raw/reacao.mp4`): eu assistindo ao original **do começo ao fim, em silêncio**, com o som do original
+   saindo de uma caixa/alto-falante para entrar no meu microfone (é por esse som que a skill sincroniza). Expressão, não fala.
+   Enquadre com **espaço acima da cabeça**: o título ocupa o topo da caixa (y 236–370).
+3. **As falas**: **um arquivo por pausa** (`raw/fala-1.mp4`, `fala-2.mp4`...), eu em tela cheia dando a minha leitura.
+   Errou? Pare 2 s e recomece a frase (o corte limpa).
+4. **Onde pausar**: os tempos do original onde cada pausa acontece (ex.: "pausa aos 0:09, 0:21 e 0:30").
+
+**Como fica (1080x1920):**
+
+| Momento | Tela | Detalhes |
+|---|---|---|
+| **Trecho** (original tocando) | **dividida**: eu em cima (**y 0–640**, moldura `#FCCD02` de 12 px), o original embaixo (**y 640–1920**, preenchendo, sem barras) | **selo do crédito** na emenda: pílula `#FCCD02`, texto `#21272D` Montserrat 800 30 px, "@autor · vídeo original", y 614–666. **Título** em cima, na minha caixa: 2 linhas, Montserrat 800 **56 px**, caixa alta, branco com sombra, `x 60–940`, a partir de **y 236**. Som: o do original. |
+| **Pausa** | o último quadro do trecho **congela**, escurece 35% e aparece o **ícone de pause** (duas barras brancas) | **0,5 s**, com um **clique** (o único efeito sonoro: a tela "pausa", então o som tem motivo). |
+| **Fala** | **eu em tela cheia** | **legenda de destaque** (3.4): caixa alta, Montserrat 900 itálico 60 px, contorno preto, **uma palavra em amarelo**, 2 a 4 palavras, y ≈ 1350. Sem título, sem selo. |
+| **Volta** | corte seco para a tela dividida | o original **continua do ponto exato** em que parou. |
+
+**Regras do react (a skill reprova se quebrar):**
+- **Crédito do autor na tela o tempo todo** em que o original aparece (Lei 9.610/98, art. 46, III: citação "para fins de
+  estudo, crítica ou polêmica", com nome do autor e origem).
+- **Cada trecho do original: no máximo 12 s.** Pausar antes é melhor do que depois.
+- **A minha fala é pelo menos 60% do vídeo.**
+- **2 a 4 pausas.** Mais que isso vira "assistir ao vídeo dele"; menos que 2 não dá virada.
+- **Original legendado?** Se o vídeo original não tiver legenda própria, legende a fala dele com a legenda limpa (3.4) na
+  metade de baixo; se tiver, não duplique.
+- **Quadro 0 / capa:** a tela dividida com o momento mais forte do original, a minha cara de reação e o título-pergunta.
+  Se o momento mais forte não é o começo, **comece o primeiro trecho nele** (não precisa ser do segundo 0).
+
+**Estrutura da fala (por pausa):**
+1. **Pausa 1 — a virada:** "Para. Ela acabou de falar uma coisa que ninguém percebeu…" (1 ideia, 10–20 s).
+2. **Pausa 2 — o outro lado:** onde **o outro sexo** também erra nessa história (princípio 11).
+3. **Última pausa — a verdade + a pergunta:** a minha conclusão em 1 frase e a pergunta para os comentários.
+
+**De quem eu reajo:** criadores e figuras públicas, vídeos públicos. **Nunca** pessoa anônima exposta (vídeo vazado,
+print de conversa, gente comum filmada sem saber), **nunca** menor de idade.
+
+### 4.0.1 Ganchos de exemplo (título do react, até 2 linhas, ~30 caracteres)
+- `ELA ESTÁ CERTA? / ATÉ O SEGUNDO 9`
+- `OS DOIS ERRARAM / NESSE VÍDEO`
+- `ELE ACHOU QUE ERA / POSTURA. NÃO ERA.`
+
+### 4.1 Opinião polêmica solo (fala direta com título fixo): R1 e R3
+**Quando:** uma ideia forte dita direto, sem react. 30 a 70 s. Ganchos de exemplo: `HOMEM QUE PEDE DESCULPA / POR TUDO NÃO É GENTIL`,
+`VOCÊ QUER HOMEM COM POSTURA. / E A SUA?`, `NINGUÉM ENSINOU HOMEM / A TER POSTURA`.
 1. **Título fixo** de 2 linhas acima da cabeça, no quadro 0 (3.3). (R3 usa legenda palavra a palavra no lugar do título.)
 2. **Take contínuo**, sem B-roll. Legenda limpa (3.4) se o som tiver que funcionar mudo.
 3. **Estrutura da fala:** frase-promessa (o próprio título) → o porquê em 2 a 3 frases → uma frase de fechamento curta.
@@ -155,7 +227,8 @@ aplicado a outro conteúdo, e ficam **[a confirmar]** até você mandar um exemp
 5. **Sem música.** Fecha na última palavra, com um respiro de 0,3 s no fim.
 
 ### 4.2 Resposta a pergunta (cartão no topo): R2
-**Quando:** responder uma pergunta de seguidor. 25 a 45 s.
+**Quando:** responder uma pergunta de seguidor (caixinha). 25 a 45 s. Funciona muito no tema: o seguidor traz a polêmica.
+Perguntas de exemplo: "Homem tem que pagar a conta?", "Por que os homens sumiram?", "Ela ganha mais que eu. E aí?".
 1. **Cartão de pergunta** no topo, estilo caixa de perguntas do Instagram: cabeçalho `#21272D` com "O QUE VOCÊ QUER SABER?"
    (caixa alta, pequeno, branco) e corpo branco com a pergunta em `#21272D`. Medido em R2: largura ~**710 px** (65%), `x 185–895`;
    **posicione com `y ≥ 220`** (R2 começa em y ≈ 205, fora da área segura). Cantos arredondados de 14 px.
@@ -187,24 +260,29 @@ de destaque** (legenda de destaque, 3.4, só nessa palavra). Itens de 8 a 15 s, 
 
 ## 5. O que eu NUNCA faço
 
-Cada item vem de algo que **não aparece em nenhuma** das 4 referências ou que as quatro evitam [confirmar os marcados com ✱].
+Os itens 1 a 4 vêm do posicionamento (seção 0). Os demais vêm de algo que **não aparece em nenhuma** das 4 referências ou que as quatro evitam [confirmar os marcados com ✱].
 
-1. **Nunca texto sobre o rosto.**
-2. **Nunca texto fora da área segura** (`x 60–940`, `y 220–1500`) nem menor que 28 px.
-3. **Nunca mais de 4 palavras** de legenda por vez, nunca legenda de 2 linhas.
-4. **Nunca mais de uma cor de destaque** por vídeo (o amarelo `#FCCD02`), nunca neon, gradiente ou contorno colorido.
-5. **Nunca emoji** na tela (não há nenhum nas referências) ✱.
-6. **Nunca transição vistosa**: sem giro, glitch, whoosh, zoom-twirl, wipe. Corte seco ou nada.
-7. **Nunca efeito sonoro em texto**; nunca trilha que atrapalha a voz; nunca música com direitos (só as fontes grátis).
-8. **Nunca 4K, nunca horizontal, nunca barras pretas laterais** (o B-roll preenche o quadro 9:16; R4 tem barras: **eu não deixo**) ✱.
-9. **Nunca inglês na tela** (exceto marca/ferramenta como se escreve).
-10. **Nunca corte de pulo no take contínuo**: ou o vídeo é contínuo, ou é montado com B-roll (princípio 9).
-11. **Nunca logo ou marca d'água grande**; no máximo um @ discreto ✱.
-12. **Nunca fundo de estúdio ou tela verde** ✱.
-13. **Nunca começar com tela preta, logo ou câmera assentando**: o quadro 0 é uma imagem com sentido (a capa).
-14. **Nunca título que entra depois dos 3 primeiros segundos.**
-15. **Nunca palavrão sem máscara** (`F#DA-SE`) ✱ [confirmar se você usa].
-16. **Nunca texto de um vídeo diferente do que foi dito** (legenda com a palavra errada); a legenda é conferida contra o áudio.
+1. **Nunca ataco mulher ou homem como grupo** ("mulher é tudo…", "homem hoje é tudo…"). Critico comportamento.
+2. **Nunca react sem crédito** do autor na tela, **nunca trecho do original com mais de 12 s**, **nunca react em que eu só
+   rio ou concordo**: sem interpretação minha, não posto.
+3. **Nunca exponho pessoa anônima nem menor de idade** (vídeo vazado, print de conversa, gente filmada sem saber).
+4. **Nunca polêmica de um lado só**: se cobro um sexo, mostro onde o outro também erra.
+5. **Nunca texto sobre o rosto.**
+6. **Nunca texto fora da área segura** (`x 60–940`, `y 220–1500`) nem menor que 28 px.
+7. **Nunca mais de 4 palavras** de legenda por vez, nunca legenda de 2 linhas.
+8. **Nunca mais de uma cor de destaque** por vídeo (o amarelo `#FCCD02`), nunca neon, gradiente ou contorno colorido.
+9. **Nunca emoji** na tela (não há nenhum nas referências) ✱.
+10. **Nunca transição vistosa**: sem giro, glitch, whoosh, zoom-twirl, wipe. Corte seco ou nada.
+11. **Nunca efeito sonoro em texto**; nunca trilha que atrapalha a voz; nunca música com direitos (só as fontes grátis).
+12. **Nunca 4K, nunca horizontal, nunca barras pretas laterais** (o B-roll preenche o quadro 9:16; R4 tem barras: **eu não deixo**) ✱.
+13. **Nunca inglês na tela** (exceto marca/ferramenta como se escreve).
+14. **Nunca corte de pulo no take contínuo**: ou o vídeo é contínuo, ou é montado com B-roll (princípio 9).
+15. **Nunca logo ou marca d'água grande**; no máximo um @ discreto ✱.
+16. **Nunca fundo de estúdio ou tela verde** ✱.
+17. **Nunca começar com tela preta, logo ou câmera assentando**: o quadro 0 é uma imagem com sentido (a capa).
+18. **Nunca título que entra depois dos 3 primeiros segundos.**
+19. **Nunca palavrão sem máscara na legenda** (`P#RRA`); na fala, pode.
+20. **Nunca texto de um vídeo diferente do que foi dito** (legenda com a palavra errada); a legenda é conferida contra o áudio.
 
 ---
 
@@ -228,11 +306,12 @@ Cada item vem de algo que **não aparece em nenhuma** das 4 referências ou que 
 |---|---|---|---|
 | 2026-11-24 | (criação) | Rascunho feito a partir de 4 referências (R1–R4). Fonte DM Sans do kit antigo não tem acentos: trocada por Montserrat (OFL). | 3.2 |
 | 2026-11-24 | (criação) | R4 deixa barras pretas nas laterais do B-roll e legenda em y≈1500; no meu estilo o B-roll preenche e a legenda sobe para y≈1350. | 3.4, 5 |
+| 2026-11-24 | (decisão) | Perfil pessoal; ângulo "verdade incômoda para os dois lados"; react começa em tela dividida e eu entro em tela cheia na pausa; uso palavrão. | 0, 2, 4.0, 5 |
 | | | | |
 
 **Pendências para confirmar com você:**
-- [ ] O estilo é mesmo "fala direta, sem corte" ou você também quer o modelo com B-roll (R4)?
-- [ ] Usa palavrão? Se sim, mascara com `#` como R4?
+- [x] ~~Estilo~~: fala direta nos solos; **react com pausa** (tela dividida → tela cheia) é o carro-chefe.
+- [x] ~~Palavrão~~: uso. [ ] Confirmar: na legenda vai mascarado com `#`?
 - [ ] Usa música em algum formato? Qual?
 - [ ] Formatos **História** e **Lista**: manda um exemplo de cada.
 - [ ] Amarelo `#FCCD02` como cor de destaque é seu, ou prefere outra?

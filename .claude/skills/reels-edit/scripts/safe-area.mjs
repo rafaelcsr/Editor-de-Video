@@ -7,7 +7,7 @@
  * and use this script for the real limits (ESTILO.md can change them with the flags below).
  *
  * Usage:
- *   node safe-area.mjs --index videos/<p>/public/index.html [--step 0.25] [--at 0,1.5,3] [--min-opacity 0.6]
+ *   node safe-area.mjs --index videos/<p>/public/index.html [--modo vertical|horizontal] [--step 0.25] [--at 0,1.5,3] [--min-opacity 0.6]
  *                      [--x0 60 --x1 940 --y0 220 --y1 1500] [--tol 1] [--json]
  * Skip an element on purpose (a background texture, a logo watermark) with data-safe-ignore on it or an ancestor.
  * An element counts as seen when its opacity (multiplied up its ancestors) is at least --min-opacity, so a title
@@ -23,7 +23,13 @@ const opt = (name, def) => { const i = argv.indexOf("--" + name); return i < 0 ?
 const flag = (name) => argv.includes("--" + name);
 const index = opt("index");
 if (!index) { console.error("usage: node safe-area.mjs --index <index.html> [--step 0.25] [--at t1,t2]"); process.exit(2); }
-const box = { x0: +opt("x0", 60), x1: +opt("x1", 940), y0: +opt("y0", 220), y1: +opt("y1", 1500) };
+// --modo vertical (default): Instagram safe area on 1080x1920. --modo horizontal: 1920x1080, 5% from every edge and the
+// bottom 130 px left free for the player controls (progress bar, buttons, YouTube captions).
+const modo = opt("modo", "vertical");
+const H = modo === "horizontal";
+const CW = H ? 1920 : 1080, CH = H ? 1080 : 1920;
+const D = H ? { x0: 96, x1: 1824, y0: 54, y1: 950 } : { x0: 60, x1: 940, y0: 220, y1: 1500 };
+const box = { x0: +opt("x0", D.x0), x1: +opt("x1", D.x1), y0: +opt("y0", D.y0), y1: +opt("y1", D.y1) };
 const tol = +opt("tol", 1), minOpacity = +opt("min-opacity", 0.6), step = +opt("step", 0.25);
 
 const require = createRequire(import.meta.url);
@@ -33,7 +39,7 @@ try { ({ chromium } = require("playwright")); } catch { try { ({ chromium } = re
 
 const exe = ["/usr/bin/google-chrome", "/opt/pw-browsers/chromium"].find((p) => { try { return require("node:fs").existsSync(p); } catch { return false; } });
 const browser = await chromium.launch({ headless: true, args: ["--no-sandbox"], ...(exe ? { executablePath: exe } : {}) });
-const page = await browser.newPage({ viewport: { width: 1080, height: 1920 }, deviceScaleFactor: 1 });
+const page = await browser.newPage({ viewport: { width: CW, height: CH }, deviceScaleFactor: 1 });
 await page.goto(pathToFileURL(resolve(index)).href, { waitUntil: "load" });
 await page.waitForTimeout(800);
 
@@ -42,8 +48,8 @@ const info = await page.evaluate(() => {
   return { duration: root ? parseFloat(root.getAttribute("data-duration")) : 0,
            w: root ? parseFloat(root.getAttribute("data-width") || 0) : 0, h: root ? parseFloat(root.getAttribute("data-height") || 0) : 0 };
 });
-if (info.w && info.h && (info.w !== 1080 || info.h !== 1920)) {
-  console.error(`FAIL the composition is ${info.w}x${info.h}, not 1080x1920`); await browser.close(); process.exit(1);
+if (info.w && info.h && (info.w !== CW || info.h !== CH)) {
+  console.error(`FAIL the composition is ${info.w}x${info.h}, not ${CW}x${CH} (--modo ${modo})`); await browser.close(); process.exit(1);
 }
 let times = opt("at") ? opt("at").split(",").map(Number) : [];
 if (!times.length) { const d = info.duration || 10; for (let t = 0; t <= d + 1e-6; t += step) times.push(+t.toFixed(3)); }

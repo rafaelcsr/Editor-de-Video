@@ -1,6 +1,6 @@
 ---
 name: reels-edit
-description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Também monta React com pausa (tela dividida com o vídeo original e você reagindo, pausa, você em tela cheia), com crédito e limite de trecho. Use quando o usuário pedir "edita esse reel", "faz o react desse vídeo", "reage a esse vídeo", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md que fica dentro desta skill (.claude/skills/reels-edit/ESTILO.md): ele é a fonte única do estilo e vence qualquer outra regra.
+description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Também monta React com pausa (tela dividida com o vídeo original e você reagindo, pausa, você em tela cheia), com crédito e limite de trecho. Também edita na horizontal (1920x1080, 16:9) quando o usuário disser "horizontal", "YouTube" ou "16:9", ou quando a gravação for horizontal. Use quando o usuário pedir "edita esse reel", "faz o react desse vídeo", "reage a esse vídeo", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md que fica dentro desta skill (.claude/skills/reels-edit/ESTILO.md): ele é a fonte única do estilo e vence qualquer outra regra.
 ---
 
 # Editor de Reels
@@ -23,8 +23,8 @@ o B-roll, o som e um MP4 vertical. Tudo roda na máquina (HyperFrames = Chrome +
 
 | Item | Valor |
 |---|---|
-| Tela | em pé, **1080x1920** (9:16). Nada de 4K, nada de 16:9 |
-| Quadros | **30 fps** constante |
+| Tela | **padrão: em pé, 1080x1920 (9:16)**. Nada de 4K. **Modo horizontal** só quando pedido ou quando a gravação é horizontal (veja "Modo horizontal") |
+| Quadros | **30 fps** constante (horizontal: a taxa da gravação, até 60) |
 | Vídeo / áudio | **H.264** (yuv420p) + **AAC** 48 kHz |
 | Cor | **BT.709** (primárias, transferência e matriz marcadas) |
 | Idioma | **português do Brasil** em tudo: transcrição, texto na tela, legenda, títulos |
@@ -106,6 +106,7 @@ em `OK`. Rode de novo ao mexer em qualquer script.
 | `stutter-scan.py` | gagueiras e retakes no texto do corte plano, segunda opinião | `--transcript --out-dir` |
 | `cutlist-to-edl.py` | o cut-list como EDL para a página de revisão (`node build-edl-review.mjs`) | `--cut-list --out` |
 | `phrase-times.py` | onde uma frase é dita (início da 1ª palavra, fim da última) | `--transcript "frase" ... [--after T]` |
+| `formato.py` | decide vertical ou horizontal e imprime as flags (tamanho, fps, resolução do render, área segura) | `--video CLIPE [--modo auto|vertical|horizontal] [--json]` |
 | `sync-tracks.py` | onde o original começa dentro da sua gravação de reação (correlação de áudio) | `--a reacao.mp4 --b original.mp4 [--window 180]`; `offset_b_after_a` = `reacao_offset` |
 | `react-plan.py` | linha do tempo do react (trecho → pausa → fala) e as regras: crédito, trecho ≤ 12 s, sua fala ≥ 60%, 2–4 pausas, 45–90 s; congela os quadros de pausa | `--spec react.json --public DIR [--max-trecho 12] [--min-share 0.6]`; exit 1 = corrija |
 | `react-compose.py` | `react-plan.json` → `public/index.html` no layout do react (dividida em cima/embaixo → pausa → você em tela cheia) | `--plan --public [--orig-pos "50% 30%"] [--react-pos "50% 40%"]` |
@@ -348,6 +349,34 @@ python3 "$SK/scripts/verify-render.py" --render "renders/<projeto>.mp4" --index 
 - Um resultado de que o usuário gostou vira um bloco reutilizável: guarde o HTML em `$SK/assets/blocos/` e descreva em uma linha.
 - Rotina de passada cabe num modelo médio; um formato novo, ou algo que este arquivo não cobre, merece o modelo mais forte.
   Os tokens vão para snapshots e saída de ferramentas: um snapshot por momento, scripts em vez de redigitar.
+
+## Modo horizontal (16:9, 1920x1080)
+
+**Quando:** o usuário diz "horizontal", "YouTube" ou "16:9", **ou** a gravação já é horizontal (mais larga que alta).
+Sem nenhum desses, é vertical. Decida no começo e use as flags que o script imprime:
+
+```bash
+python3 "$SK/scripts/formato.py" --video "$W/raw/<clipe>.MP4" [--modo horizontal]
+# modo horizontal: 1920x1080 a 60 fps | apply-cut --size 1920x1080 --fps 60 | render --resolution landscape --fps 60
+#                  | verify-render --res 1920x1080 --fps 60 | safe-area --modo horizontal
+```
+
+- **Saída:** 1920x1080, **a taxa de quadros da gravação** (arredondada para 24, 25, 30, 50 ou 60; nunca acima de 60),
+  H.264 + AAC, **BT.709** (mesmo remux do passo 4), entrega igual em `renders/<projeto>.mp4`.
+- **Comandos que mudam** (o resto da rota é igual): `apply-cut.py --size 1920x1080 --fps <fps>`; no corte plano,
+  `scale=1920:1080:...,crop=1920:1080` e `-r <fps> -g <fps> -keyint_min <fps>`; composição com `data-width="1920"
+  data-height="1080" data-fps="<fps>"` e `<meta name="viewport" content="width=1920, height=1080">`; `broll-conform.py
+  --size 1920x1080 --fps <fps>`; `render --resolution landscape --fps <fps>`; `verify-render.py --res 1920x1080 --fps <fps>`.
+- **Área segura horizontal** (a do Instagram **não** vale aqui): texto a pelo menos **5% das bordas** e **fora da faixa
+  dos controles do player** embaixo: **x 96–1824, y 54–950**. Legendas e cartões nunca descem abaixo de y 950 (barra de
+  progresso, botões, legenda automática do YouTube). Confira com `safe-area.mjs --modo horizontal` e use
+  `npx hyperframes check --safe-zone standard` em vez de `off`.
+- **O ESTILO.md continua mandando em tudo**: cores, fontes, título, legenda, som, formatos e a lista do "nunca". Só mudam
+  proporção, resolução, fps e área segura. Tamanhos de fonte em px ficam os mesmos do ESTILO.md (a altura útil é a
+  referência de leitura); posições do ESTILO.md que são de 9:16 (ex.: legenda em y ≈ 1350) viram a posição equivalente
+  dentro da área horizontal: **título no terço de cima, legenda na faixa de baixo, acima de y 950**, nunca sobre o rosto.
+- **React com pausa** continua só vertical (`react-compose.py` monta 1080x1920). Se pedirem react na horizontal, avise e
+  pergunte antes de adaptar.
 
 ## Economia de processo (pedido do usuário)
 

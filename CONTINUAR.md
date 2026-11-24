@@ -13,7 +13,8 @@ Branch: `claude/beautiful-dirac-r8ximd` (tudo commitado e enviado). Abra uma con
   - **React com pausa**: `react-plan.py` (linha do tempo e regras), `react-compose.py` (composição), `sync-tracks.py`
     (sincroniza a sua reação com o original; sinal do offset corrigido). Testado com vídeo sintético até o MP4.
   - Seção "Economia de processo" no `SKILL.md`.
-  - 30 testes passando: `cd .claude/skills/reels-edit/scripts && python3 -m unittest tests`.
+  - **Modo horizontal** (1920x1080, fps da gravação até 60, área x 96–1824 / y 54–950) quando pedido ou quando a gravação é horizontal: `formato.py`.
+  - 37 testes passando: `cd .claude/skills/reels-edit/scripts && python3 -m unittest tests`.
 - **`ESTILO.md`** em `.claude/skills/reels-edit/ESTILO.md`: fonte única do estilo (vence qualquer regra). Tem posicionamento,
   princípios, cores, fontes, título, legenda, câmera, ritmo, som, formatos com receita (4.0 React é o carro-chefe),
   ganchos de exemplo, lista do "nunca" e a seção Notas.

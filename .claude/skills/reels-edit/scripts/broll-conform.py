@@ -22,11 +22,13 @@ ap.add_argument("--start", type=float, default=0.0, help="seconds into the gener
 ap.add_argument("--dur", type=float, help="seconds to keep (default: the rest of the clip; required for a still)")
 ap.add_argument("--push", type=float, default=1.08, help="still only: end scale of the push-in (1.00 = none)")
 ap.add_argument("--grade", action="store_true", help="a light grade toward camera footage: contrast +3%%, saturation -8%%")
+ap.add_argument("--size", default="1080x1920", help="output WxH: 1080x1920 (Reels) or 1920x1080 (horizontal)")
+ap.add_argument("--fps", type=int, default=30, help="output frame rate (horizontal: the recording's, up to 60)")
 ap.add_argument("--crop-x", type=float, default=0.5, help="horizontal crop anchor for a wider source, 0 to 1")
 ap.add_argument("--vf", default="", help="ffmpeg filters applied first, in source pixels (crop a logo out, blur a browser bar)")
 args = ap.parse_args()
 
-W, H = 1080, 1920
+W, H = [int(x) for x in args.size.lower().split("x")]
 still = os.path.splitext(args.src)[1].lower() in (".png", ".jpg", ".jpeg", ".webp")
 if still and not args.dur:
     sys.exit("a still needs --dur (seconds of push-in)")
@@ -45,11 +47,11 @@ fill = ("scale=%d:%d:force_original_aspect_ratio=increase:flags=lanczos,crop=%d:
 grade = ",eq=contrast=1.03:saturation=0.92" if args.grade else ""
 os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
 if still:
-    n = int(round(args.dur * 30))
+    n = int(round(args.dur * args.fps))
     # zoompan on a 2x canvas so the push is smooth, not stepped; centred, linear in scale
     vf = ("scale=%d:%d:force_original_aspect_ratio=increase:flags=lanczos,crop=%d:%d,"
-          "zoompan=z='1+(%.4f-1)*on/%d':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=%d:s=%dx%d:fps=30%s,format=yuv420p"
-          % (W * 2, H * 2, W * 2, H * 2, args.push, max(1, n - 1), n, W, H, grade))
+          "zoompan=z='1+(%.4f-1)*on/%d':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=%d:s=%dx%d:fps=%d%s,format=yuv420p"
+          % (W * 2, H * 2, W * 2, H * 2, args.push, max(1, n - 1), n, W, H, args.fps, grade))
     cmd = ["ffmpeg", "-y", "-v", "error", "-loop", "1", "-i", args.src, "-vf", vf, "-frames:v", str(n)]
 else:
     info = probe(args.src)
@@ -58,9 +60,9 @@ else:
         if args.dur > dur + 0.01:
             sys.exit("the clip has %.2f s after --start %.2f; --dur %.2f is longer" % (dur, args.start, args.dur))
         dur = args.dur
-    vf = "%s%s,fps=30%s,format=yuv420p" % ((args.vf + ",") if args.vf else "", fill, grade)
+    vf = "%s%s,fps=%d%s,format=yuv420p" % ((args.vf + ",") if args.vf else "", fill, args.fps, grade)
     cmd = ["ffmpeg", "-y", "-v", "error", "-ss", "%.3f" % args.start, "-i", args.src, "-t", "%.3f" % dur, "-vf", vf]
-cmd += ["-an", "-c:v", "libx264", "-preset", "slow", "-crf", "14", "-g", "15", "-keyint_min", "15", "-sc_threshold", "0",
+cmd += ["-an", "-c:v", "libx264", "-preset", "slow", "-crf", "14", "-g", str(max(1, args.fps // 2)), "-keyint_min", str(max(1, args.fps // 2)), "-sc_threshold", "0",
         "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709", "-color_range", "tv", "-movflags", "+faststart", args.out]
 subprocess.run(cmd, check=True)
 
@@ -71,7 +73,7 @@ if [s for s in out["streams"] if s["codec_type"] == "audio"]:
     sys.exit("FAIL %s still has audio" % args.out)
 sheet = args.out + ".sheet.png"
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", args.out, "-vf",
-                "select='eq(n,0)+eq(n,%d)+eq(n,%d)',scale=640:-2,tile=3x1" % (int(d_out * 15), max(0, int(d_out * 30) - 2)),
+                "select='eq(n,0)+eq(n,%d)+eq(n,%d)',scale=640:-2,tile=3x1" % (int(d_out * args.fps / 2), max(0, int(d_out * args.fps) - 2)),
                 "-frames:v", "1", "-fps_mode", "vfr", sheet], check=True)
 print("wrote %s: %dx%d, %s fps, %.2f s, no audio" % (args.out, v["width"], v["height"], v["r_frame_rate"], d_out))
 print("sheet: %s (look at it: hands, text on screens, faces that drifted)" % sheet)

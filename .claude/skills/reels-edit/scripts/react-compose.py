@@ -48,6 +48,12 @@ for s in segs:
     if s["tipo"] == "trecho":
         pz = next(x for x in segs if x["tipo"] == "pausa" and x["n"] == n)
         d = round(s["dur"] + pz["dur"], 3)
+        cheia = s.get("layout") == "cheia"
+        if cheia:   # the original alone, full screen: no top box, credit low on the frame, no title
+            el.append('<video class="origcheia" id="ori%d" src="%s" playsinline data-has-audio="true" data-start="%s" data-duration="%s" data-media-start="%s" data-track-index="4"></video>'
+                      % (n, esc(p["original"]), st, s["dur"], s["media_start"]))
+            el.append('<div class="clip selo selobaixo" id="selo%d" data-start="%s" data-duration="%s" data-track-index="7">%s</div>' % (n, st, d, cred))
+            continue
         if p.get("reacao"):
             el.append('<video class="rea" id="rea%d" src="%s" muted playsinline data-start="%s" data-duration="%s" data-media-start="%s" data-track-index="3"></video>'
                       % (n, esc(p["reacao"]), st, d, s["reacao_media_start"]))
@@ -57,11 +63,17 @@ for s in segs:
         el.append('<div class="clip selo" id="selo%d" data-start="%s" data-duration="%s" data-track-index="7">%s</div>' % (n, st, d, cred))
         el.append('<div class="clip titulo" id="tit%d" data-start="%s" data-duration="%s" data-track-index="8">%s</div>' % (n, st, d, titulo))
     elif s["tipo"] == "pausa":
+        if next(x for x in segs if x["tipo"] == "trecho" and x["n"] == n).get("layout") == "cheia":
+            el.append('<img class="clip congelado congcheio" id="cong%d" src="%s" data-start="%s" data-duration="%s" data-track-index="5">' % (n, esc(s["frame"]), st, s["dur"]))
+            el.append('<div class="clip escuro escurocheio" id="esc%d" data-start="%s" data-duration="%s" data-track-index="9"><i></i><i></i></div>' % (n, st, s["dur"]))
+            if click:
+                el.append('<audio id="clk%d" src="%s" data-start="%s" data-duration="0.3" data-track-index="10" data-volume="0.28"></audio>' % (n, click, st))
+            continue
         el.append('<img class="clip congelado" id="cong%d" src="%s" data-start="%s" data-duration="%s" data-track-index="5">' % (n, esc(s["frame"]), st, s["dur"]))
         el.append('<div class="clip escuro" id="esc%d" data-start="%s" data-duration="%s" data-track-index="9"><i></i><i></i></div>' % (n, st, s["dur"]))
         if click:
             el.append('<audio id="clk%d" src="%s" data-start="%s" data-duration="0.3" data-track-index="10" data-volume="0.28"></audio>' % (n, click, st))
-    else:
+    else:   # fala or gancho: you, full screen
         el.append('<video class="fala" id="fala%d" src="%s" playsinline data-has-audio="true" data-start="%s" data-duration="%s" data-track-index="1"></video>'
                   % (n, esc(s["src"]), st, s["dur"]))
 
@@ -84,9 +96,15 @@ html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 .selo{position:absolute;left:50%%;top:614px;transform:translateX(-50%%);height:52px;padding:0 26px;border-radius:26px;background:var(--amarelo);color:var(--painel);font:800 30px/52px M;white-space:nowrap;z-index:7}
 .titulo{position:absolute;left:60px;width:880px;top:236px;text-align:center;color:var(--branco);font:800 56px/1.15 M;text-transform:uppercase;text-shadow:0 2px 12px rgba(0,0,0,.6);z-index:7}
 .fala{position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover}
-/* legenda de destaque (ESTILO 3.4): <div class="clip leg" data-start=".." data-duration="..">ISSO É <b>POSTURA</b></div> */
-.leg{position:absolute;left:60px;width:880px;top:1310px;text-align:center;color:var(--branco);font:900 italic 60px/1.1 MI;text-transform:uppercase;-webkit-text-stroke:4px #000;paint-order:stroke fill;z-index:8}
-.leg b{color:var(--amarelo)}
+.origcheia{position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover;object-position:%(opos)s}
+.selobaixo{top:1380px}
+.congcheio{top:0;height:1920px}
+.escurocheio{top:0;height:1920px}
+/* legenda limpa com destaque pontual (ESTILO 3.4 / DIRECAO 11): <div class="clip leg" ...>Isso é <b>postura</b>.</div>
+   a legenda do original (quando ele nao tiver): <div class="clip leg legorig" ...> */
+.leg{position:absolute;left:60px;width:880px;top:1310px;text-align:center;color:var(--branco);font:800 58px/1.15 M;text-shadow:0 2px 10px rgba(0,0,0,.75),0 0 2px rgba(0,0,0,.9);z-index:8}
+.leg b{color:var(--amarelo);font-weight:800}
+.legorig{top:1180px;font-size:46px;color:rgba(255,255,255,.9)}
 </style></head><body>
 <div id="stage" data-composition-id="%(id)s" data-start="0" data-duration="%(D)s" data-fps="30" data-width="1080" data-height="1920">
 %(el)s

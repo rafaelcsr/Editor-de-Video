@@ -11,7 +11,11 @@ Input (react.json; paths relative to the file):
    "reacao": "public/reacao.mp4", "reacao_offset": 2.31,      # optional: you watching; offset = sync-tracks.py result
    "trechos": [[0, 9.5], [9.5, 21.0], [21.0, 30.2]],          # seconds of the ORIGINAL played before each pause
    "falas": ["public/fala-1.mp4", "public/fala-2.mp4", "public/fala-3.mp4"],   # one flat-cut file per pause
-   "pausa": 0.5}
+   "pausa": 0.5,
+   "gancho": "public/gancho.mp4"}                              # optional: your strongest line, full screen, BEFORE the original
+A trecho may also be an object: {"de": 21.0, "ate": 36.0, "layout": "cheia", "integral": true, "motivo": "fala precisa ser
+ouvida inteira"}. layout "dividida" (default: original below, you on top) or "cheia" (the original alone, full screen).
+"integral" with a "motivo" lets a trecho pass --max-trecho (it becomes a WARN, the motivo goes to the plan).
 Writes react-plan.json and REACT-PLAN.md next to react.json and pausa-N.png (the frozen frames) into --public.
 
 Rules (from ESTILO.md; numbers adjustable with flags):
@@ -48,7 +52,12 @@ if not str(spec.get("credito", "")).strip():
 if not str(spec.get("titulo", "")).strip():
     fails.append("sem titulo: o quadro 0 precisa da pergunta provocativa")
 orig = P(spec["original"]); d_orig = duration(orig)
-trechos = [(float(a), float(b)) for a, b in spec["trechos"]]
+def trecho(t):
+    if isinstance(t, dict):
+        return float(t["de"]), float(t["ate"]), t.get("layout", "dividida"), bool(t.get("integral")), str(t.get("motivo", ""))
+    return float(t[0]), float(t[1]), "dividida", False, ""
+T = [trecho(t) for t in spec["trechos"]]
+trechos = [(a, b) for a, b, *_ in T]
 falas = [P(f) for f in spec["falas"]]
 if len(falas) != len(trechos):
     fails.append("%d trechos e %d falas: precisa de uma fala depois de cada trecho" % (len(trechos), len(falas)))
@@ -59,7 +68,10 @@ for i, (a, b) in enumerate(trechos, 1):
     if a < prev - 1e-3:
         fails.append("trecho %d comeca em %.2f, antes do fim do anterior (%.2f)" % (i, a, prev))
     if b - a > args.max_trecho + 1e-6:
-        fails.append("trecho %d tem %.1f s (maximo %.0f s): corte o trecho ou pause antes" % (i, b - a, args.max_trecho))
+        if T[i - 1][3] and T[i - 1][4].strip():
+            warns.append("trecho %d tem %.1f s (integral: %s)" % (i, b - a, T[i - 1][4]))
+        else:
+            fails.append("trecho %d tem %.1f s (maximo %.0f s): corte o trecho, pause antes ou marque integral com motivo" % (i, b - a, args.max_trecho))
     prev = b
 reacao = spec.get("reacao")
 if not reacao:
@@ -69,9 +81,12 @@ pausa = float(spec.get("pausa", 0.5))
 
 os.makedirs(args.public, exist_ok=True)
 segs, t = [], 0.0
+if spec.get("gancho"):
+    g = P(spec["gancho"]); dg = duration(g)
+    segs.append({"tipo": "gancho", "n": 0, "start": 0.0, "dur": round(dg, 3), "src": os.path.relpath(g, os.path.abspath(args.public))}); t += dg
 for i, (a, b) in enumerate(trechos, 1):
-    segs.append({"tipo": "trecho", "n": i, "start": round(t, 3), "dur": round(b - a, 3), "media_start": a,
-                 "reacao_media_start": round(off + a, 3) if reacao else None}); t += b - a
+    segs.append({"tipo": "trecho", "n": i, "start": round(t, 3), "dur": round(b - a, 3), "media_start": a, "layout": T[i - 1][2],
+                 "motivo": T[i - 1][4] or None, "reacao_media_start": round(off + a, 3) if reacao else None}); t += b - a
     frame = "pausa-%d.png" % i
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "%.3f" % max(0.0, b - 1.0 / args.fps), "-i", orig, "-frames:v", "1",
                     os.path.join(args.public, frame)], check=True)
@@ -81,7 +96,7 @@ for i, (a, b) in enumerate(trechos, 1):
         segs.append({"tipo": "fala", "n": i, "start": round(t, 3), "dur": round(df, 3),
                      "src": os.path.relpath(falas[i - 1], os.path.abspath(args.public))}); t += df
 total = round(t, 3)
-d_fala = sum(s["dur"] for s in segs if s["tipo"] == "fala")
+d_fala = sum(s["dur"] for s in segs if s["tipo"] in ("fala", "gancho"))
 share = d_fala / total if total else 0
 if share < args.min_share:
     fails.append("sua fala e %.0f%% do video (minimo %.0f%%): fale mais ou encurte os trechos" % (100 * share, 100 * args.min_share))

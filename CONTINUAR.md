@@ -15,6 +15,7 @@ Branch: `claude/beautiful-dirac-r8ximd` (tudo commitado e enviado). Abra uma con
   - Seção "Economia de processo" no `SKILL.md`.
   - **Modo horizontal** (1920x1080, fps da gravação até 60, área x 96–1824 / y 54–950) quando pedido ou quando a gravação é horizontal: `formato.py`.
   - 37 testes passando: `cd .claude/skills/reels-edit/scripts && python3 -m unittest tests`.
+- **`DIRECAO.md`** em `.claude/skills/reels-edit/DIRECAO.md`: direção criativa e processo em 4 etapas com aprovação (vale para todo vídeo).
 - **`ESTILO.md`** em `.claude/skills/reels-edit/ESTILO.md`: fonte única do estilo (vence qualquer regra). Tem posicionamento,
   princípios, cores, fontes, título, legenda, câmera, ritmo, som, formatos com receita (4.0 React é o carro-chefe),
   ganchos de exemplo, lista do "nunca" e a seção Notas.

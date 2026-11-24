@@ -49,6 +49,22 @@ class ReactPlan(unittest.TestCase):
         self.assertNotRegex(html, r'<div(?![^>]*data-composition-id)[^>]*data-start[^>]*>\s*<video')   # never a video inside a timed div
         self.assertTrue(os.path.exists(os.path.join(pub, "gsap.min.js")))
 
+    def test_hook_full_original_and_integral(self):
+        d, pub, spec = self.setup([[0, 8], {"de": 8, "ate": 22, "layout": "cheia", "integral": True, "motivo": "ouvir inteira"}], [14, 20])
+        import json
+        sp = json.load(open(spec)); sp["gancho"] = "public/fala-1.mp4"; json.dump(sp, open(spec, "w"))
+        r = run("react-plan.py", "--spec", spec, "--public", pub)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        self.assertIn("integral: ouvir inteira", r.stdout)
+        p = load(os.path.join(d, "react-plan.json"))
+        self.assertEqual([s["tipo"] for s in p["segments"]][:2], ["gancho", "trecho"])
+        self.assertEqual(p["segments"][4]["layout"], "cheia")
+        r = run("react-compose.py", "--plan", os.path.join(d, "react-plan.json"), "--public", pub)
+        self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+        html = read(os.path.join(pub, "index.html"))
+        self.assertIn('class="origcheia"', html)
+        self.assertEqual(html.count('class="rea"'), 1)            # no top box during the full-screen original
+
     def test_long_trecho_and_low_share_fail(self):
         d, pub, spec = self.setup([[0, 15], [15, 30]], [5, 5])
         r = run("react-plan.py", "--spec", spec, "--public", pub)

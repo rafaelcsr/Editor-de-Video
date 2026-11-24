@@ -1,6 +1,6 @@
 ---
 name: reels-edit
-description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Também monta React com pausa (tela dividida com o vídeo original e você reagindo, pausa, você em tela cheia), com crédito e limite de trecho. Também edita na horizontal (1920x1080, 16:9) quando o usuário disser "horizontal", "YouTube" ou "16:9", ou quando a gravação for horizontal. Use quando o usuário pedir "edita esse reel", "faz o react desse vídeo", "reage a esse vídeo", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md que fica dentro desta skill (.claude/skills/reels-edit/ESTILO.md): ele é a fonte única do estilo e vence qualquer outra regra.
+description: Edita Reels do Instagram de ponta a ponta no Claude Code, em português do Brasil. Pega um clipe bruto (com retakes) ou um corte já pronto, corta, monta a versão vertical 1080x1920 a 30 fps com o HyperFrames (legendas, títulos, B-roll, música e efeitos grátis) e entrega um MP4 H.264/AAC BT.709 em renders/<nome do projeto>.mp4. Também monta React com pausa (tela dividida com o vídeo original e você reagindo, pausa, você em tela cheia), com crédito e limite de trecho. Também edita na horizontal (1920x1080, 16:9) quando o usuário disser "horizontal", "YouTube" ou "16:9", ou quando a gravação for horizontal. Use quando o usuário pedir "edita esse reel", "faz o react desse vídeo", "reage a esse vídeo", "corta esse vídeo", "faz o reel", "legenda esse vídeo", "monta o vertical", "edita esse clipe pro Instagram" ou citar um arquivo de vídeo para editar. ANTES de qualquer edição, lê o ESTILO.md e o DIRECAO.md que ficam dentro desta skill (.claude/skills/reels-edit/): ele é a fonte única do estilo e vence qualquer outra regra.
 ---
 
 # Editor de Reels
@@ -10,7 +10,7 @@ o B-roll, o som e um MP4 vertical. Tudo roda na máquina (HyperFrames = Chrome +
 
 ## Regra zero: ler o ESTILO.md
 
-**Antes de qualquer edição, leia `.claude/skills/reels-edit/ESTILO.md`** (`$SK/ESTILO.md`). É a **fonte única do estilo**: cores, fontes, título, legenda, câmera, ritmo, som, formatos e a lista do que nunca se faz. Este SKILL.md cuida só da técnica.
+**Antes de qualquer edição, leia `.claude/skills/reels-edit/ESTILO.md` e `.claude/skills/reels-edit/DIRECAO.md`** (a direção criativa e o processo em 4 etapas; vale para todos os vídeos). Sobre o ESTILO.md: (`$SK/ESTILO.md`). É a **fonte única do estilo**: cores, fontes, título, legenda, câmera, ritmo, som, formatos e a lista do que nunca se faz. Este SKILL.md cuida só da técnica.
 
 - **Ele vence qualquer outra regra**: este SKILL.md, os scripts, as skills do HyperFrames. Se o ESTILO.md diz uma coisa e
   este arquivo diz outra, vale o ESTILO.md. Quando o conflito mudar o resultado, avise em uma linha qual regra foi vencida.
@@ -96,9 +96,14 @@ Decida como um editor profissional, priorizando **retenção, naturalidade, clar
 | Um corte já pronto (sem zoom, legenda ou transição gravados) | pula a etapa de corte; vai direto ao "Corte plano para vertical" |
 | Gravação de tela e rosto em arquivos separados | grave os dois com o mesmo microfone; o rosto vira o vídeo principal e a tela entra como cutaway em tela cheia |
 
-**Dois pontos de parada com o usuário por vídeo; o resto roda sozinho.**
-**A, o corte:** `PAPER-CUT.md` (o que sai e por quê); o usuário responde em palavras simples ("mantém a primeira versão da frase do preço").
-**B, o plano:** a lista de momentos (`plano.md`) e a folha de quadros `snaps/` com cada momento de texto como imagem. Só então render.
+**Quatro etapas com aprovação (DIRECAO.md 18); entre elas, autonomia total, sem perguntar sobre cada corte ou efeito.**
+1. **Análise e corte bruto** → `$W/ETAPA1.md` (diagnóstico, gancho, estrutura, cortes com timestamps do original, mantidos,
+   removidos com motivo, transcrição corrigida do que fica, duração estimada) + `PAPER-CUT.md`/`REACT-PLAN.md`. Sem efeitos.
+2. **Direção visual** → `$W/ETAPA2.md` (timeline final, layout por trecho, original/câmera/split, zooms, textos, sons,
+   trilha, transições) + poucos frames pequenos das composições principais (`snapshot --at`). Sem render.
+3. **Edição e prévia** → composição completa, `check` + `safe-area.mjs`, prévia com `render --quality draft`. Checklist da DIRECAO.md 20.
+4. **Render final** só depois do "aprovado" → render completo, remux BT.709, `verify-render.py`, entrega com nome,
+   resolução real da origem e da saída, formato, duração, FPS e status.
 
 **Portão da abertura** (em todo reel, no ponto B):
 - Algo acontece entre **1 e 3 s**: o texto-gancho entra, o corte muda, o zoom empurra. Escreva no plano qual é.
@@ -157,7 +162,7 @@ python3 "$SK/scripts/edge-audit.py" --audio "$W/audio-raw.wav" --cut-list "$W/cu
 python3 "$SK/scripts/apply-cut.py" --input "$W/raw/<clipe>.MP4" --cut-list "$W/cut-list.json" --out "$W/public/input-video.mp4" --size 1080x1920
 ffmpeg -y -v error -i "$W/public/input-video.mp4" -vn -acodec pcm_s16le -ar 16000 -ac 1 "$W/audio.wav"
 npx hyperframes transcribe "$W/audio.wav" -d "$W" --engine parakeet --language pt --json    # transcript.json, no tempo do corte plano
-python3 "$SK/scripts/dead-air.py" "$W" --plan
+python3 "$SK/scripts/dead-air.py" "$W" --plan     # é proposta: pausa com função (reação, impacto) fica com --keep T
 #   para cada faixa proposta: patch-cut.py --drop-flat A-B, edge-audit até 0, apply-cut, transcrever de novo,
 #   e dead-air outra vez até imprimir 0 pausas
 ```

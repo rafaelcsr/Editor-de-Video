@@ -118,6 +118,11 @@ Uma família só por vídeo. Se quiser outra fonte, ela precisa ter os glifos `�
 
 ### 3.4 Legenda
 
+> **Atualizado pela DIRECAO.md (11):** a legenda padrão da **minha fala**, em react e solo, é a **limpa**: sentence case,
+> Montserrat 800 **58 px**, branco com sombra, **destaque pontual** de uma palavra em amarelo `#FCCD02` só quando reforça
+> sentido, humor ou argumento. Caixa alta fica para o título. A legenda "de destaque" em caixa alta da tabela abaixo
+> vira exceção (tutorial/humor muito pontual). Legenda do original, quando necessária, menor (46 px) e separada da minha.
+
 Duas famílias nas referências; escolha **uma por vídeo**:
 
 | | **Legenda limpa** (R3) [em 1 de 4, padrão para opinião/conselho] | **Legenda de destaque** (R4) [padrão da minha fala no **react** e em tutorial/humor] |
@@ -149,7 +154,8 @@ Duas famílias nas referências; escolha **uma por vídeo**:
 ### 3.6 Ritmo
 
 - **Take contínuo (padrão):** **zero cortes visíveis** em 3 de 4 referências (31, 64 e 70 s). Só se cortam retakes,
-  respirações longas e pausas acima de **0,40 s** (o `dead-air.py` já faz isso) e **sem pulo de enquadramento**.
+  respirações longas e pausas **sem função** acima de **0,40 s** (o `dead-air.py` propõe; pausa de reação, incredulidade ou
+  impacto **fica**, com `--keep`, DIRECAO.md 7) e **sem pulo de enquadramento**.
 - **Com B-roll (R4):** troca de plano a **cada 3 a 5 s**, sempre **na frase** que o plano ilustra; o apresentador fica fixo
   no terço de cima.
 - **Duração:** de **30 a 70 s** para fala direta (R1 70 s, R2 31 s, R3 64 s); até **~110 s** para tutorial com B-roll (R4).
@@ -158,6 +164,9 @@ Duas famílias nas referências; escolha **uma por vídeo**:
 - **Fala:** ritmo de conversa, com pausa curta antes da frase de impacto. Pausa longa fica no corte final.
 
 ### 3.7 Som
+
+> **Atualizado pela DIRECAO.md (13–14):** efeitos permitidos com sentido e pontuais: whoosh **sutil** em mudança de layout,
+> impacto discreto de ênfase, som cômico no absurdo, silêncio para valorizar reação. Trilha opcional, nunca competindo com a voz.
 
 - **Voz sempre limpa, em ~ −14 LUFS** (as 4 referências ficam entre **−14,1 e −14,9 LUFS**), pico real abaixo de −1 dBTP
   (a R3 estoura, +0,6 dBFS: evite).
@@ -195,13 +204,19 @@ conteúdo, e ficam **[a confirmar]** até você mandar um exemplo. O **React com
 |---|---|---|
 | **Trecho** (original tocando) | **dividida**: eu em cima (**y 0–640**, moldura `#FCCD02` de 12 px), o original embaixo (**y 640–1920**, preenchendo, sem barras) | **selo do crédito** na emenda: pílula `#FCCD02`, texto `#21272D` Montserrat 800 30 px, "@autor · vídeo original", y 614–666. **Título** em cima, na minha caixa: 2 linhas, Montserrat 800 **56 px**, caixa alta, branco com sombra, `x 60–940`, a partir de **y 236**. Som: o do original. |
 | **Pausa** | o último quadro do trecho **congela**, escurece 35% e aparece o **ícone de pause** (duas barras brancas) | **0,5 s**, com um **clique** (o único efeito sonoro: a tela "pausa", então o som tem motivo). |
-| **Fala** | **eu em tela cheia** | **legenda de destaque** (3.4): caixa alta, Montserrat 900 itálico 60 px, contorno preto, **uma palavra em amarelo**, 2 a 4 palavras, y ≈ 1350. Sem título, sem selo. |
+| **Fala** | **eu em tela cheia** | **legenda limpa** (3.4): sentence case, Montserrat 800 58 px, destaque pontual em amarelo, y ≈ 1310–1400. Sem título, sem selo. |
 | **Volta** | corte seco para a tela dividida | o original **continua do ponto exato** em que parou. |
+
+> **Layout flexível (DIRECAO.md 6):** a sequência acima é o padrão, não uma camisa de força. Cada trecho escolhe o layout
+> que melhor serve ao momento, sempre com motivo: **dividida** (contexto + minha reação), **original em tela cheia**
+> (`"layout": "cheia"`, quando o original pede atenção total), **eu em tela cheia** (opinião, argumento, reação forte).
+> O react pode **abrir com uma fala minha** (`"gancho"`), se ela for o melhor gancho.
 
 **Regras do react (a skill reprova se quebrar):**
 - **Crédito do autor na tela o tempo todo** em que o original aparece (Lei 9.610/98, art. 46, III: citação "para fins de
   estudo, crítica ou polêmica", com nome do autor e origem).
-- **Cada trecho do original: no máximo 12 s.** Pausar antes é melhor do que depois.
+- **Cada trecho do original: no máximo 12 s.** Pausar antes é melhor do que depois. **Exceção:** quando a fala do original
+  precisa ser ouvida inteira para o contexto, marque o trecho `"integral": true` com `"motivo"` (vira aviso, não reprova).
 - **A minha fala é pelo menos 60% do vídeo.**
 - **2 a 4 pausas.** Mais que isso vira "assistir ao vídeo dele"; menos que 2 não dá virada.
 - **Original legendado?** Se o vídeo original não tiver legenda própria, legende a fala dele com a legenda limpa (3.4) na
@@ -277,7 +292,7 @@ Os itens 1 a 4 vêm do posicionamento (seção 0). Os demais vêm de algo que **
 7. **Nunca mais de 4 palavras** de legenda por vez, nunca legenda de 2 linhas.
 8. **Nunca mais de uma cor de destaque** por vídeo (o amarelo `#FCCD02`), nunca neon, gradiente ou contorno colorido.
 9. **Nunca emoji** na tela (não há nenhum nas referências) ✱.
-10. **Nunca transição vistosa**: sem giro, glitch, whoosh, zoom-twirl, wipe. Corte seco ou nada.
+10. **Nunca transição vistosa**: sem giro, glitch, zoom-twirl, wipe. Corte seco; **whoosh só sutil, pontual e em mudança de layout** (DIRECAO.md 13), nunca em texto.
 11. **Nunca efeito sonoro em texto**; nunca trilha que atrapalha a voz; nunca música com direitos (só as fontes grátis).
 12. **Nunca 4K, nunca horizontal, nunca barras pretas laterais** (o B-roll preenche o quadro 9:16; R4 tem barras: **eu não deixo**) ✱.
 13. **Nunca inglês na tela** (exceto marca/ferramenta como se escreve).

@@ -59,6 +59,33 @@ em `OK`. Rode de novo ao mexer em qualquer script.
 - O `doctor` pode marcar `whisper-cpp`, `Kokoro`, `MusicGen` e `Docker` como ausentes. Nenhum é necessário aqui.
 - O aviso "loudness só comparável no FFmpeg 8.0.1" do `doctor` é só informativo.
 
+## Diagnóstico editorial (antes de qualquer corte)
+
+Toda edição começa com uma análise do material, escrita em `$W/DIAGNOSTICO.md` e mostrada ao usuário junto do ponto A.
+Decida como um editor profissional, priorizando **retenção, naturalidade, clareza e autenticidade**:
+
+1. **Gancho:** o melhor momento para abrir (frase, reação ou imagem), com o tempo exato. Se não está no começo, a abertura
+   começa nele (ou o título adianta a promessa) e o resto segue a ordem original.
+2. **O que sai:** trechos a remover, com tempos e motivo (retake, rodeio, repetição, explicação que não acrescenta).
+3. **Quando você aparece com destaque:** os momentos de opinião, virada ou emoção, que ficam em tela cheia ou com zoom.
+4. **Onde fica o vídeo original:** em react ou B-roll, quanto do original fica, e por quê. Sem cortar o contexto que dá
+   sentido à sua fala.
+5. **Cortes, zooms e enquadramento:** tempo de cada um e o motivo (ênfase, punchline, mudança de assunto). Zoom só com
+   função; no máximo um a cada poucas frases.
+6. **Ritmo:** contínuo ou picotado, duração-alvo e onde acelerar ou deixar respirar.
+7. **Tom da edição:** **reflexiva**, **humorística** ou **opinião forte**. É o que define legenda, pausa, zoom e som.
+
+**Regras de execução:**
+- **Não exagere nos efeitos** e **não transforme em edição genérica**: o vídeo tem que parecer de um criador com
+  personalidade própria, não de uma IA aplicando template. Na dúvida entre um efeito e nenhum, nenhum.
+- **Preserve a sua personalidade e o sentido original das suas falas**: nunca corte de forma que mude o que você quis
+  dizer. Nunca junte duas frases para criar uma ideia que você não falou. Pausa de efeito, risada e gesto que fazem
+  parte do seu jeito ficam.
+- **Quando der para editar, edite** (as rotas abaixo). **Quando não der** (falta Parakeet, falta arquivo, formato
+  fora do que a skill monta), entregue um `$W/PLANO-DE-EDICAO.md` com **timestamps**, a instrução precisa de cada corte,
+  zoom e texto, e o porquê, pronto para aplicar rápido em qualquer editor.
+- Se o vídeo não foi anexado, peça o arquivo. Nunca invente o diagnóstico.
+
 ## Rotas
 
 | Entrada | Rota |

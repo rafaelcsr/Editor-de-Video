@@ -63,6 +63,11 @@ a verdade incômoda para os dois lados, sem enfeite: a pessoa é o vídeo, e o t
 14. **No react, a minha fala é o produto.** O vídeo alheio é só a pergunta; eu sou a resposta. *Porquê:* é o que torna o uso
     legítimo (crítica, com crédito) e é o que faz alguém seguir **a mim**, não ao vídeo original.
 15. **Toda polêmica termina numa pergunta para o público.** "Você concorda com ela ou comigo?" *Porquê:* comentário é o que
+16. **Parece gente, não template.** Cada edição tem que soar como um criador com personalidade própria: poucos efeitos,
+    cada um com função, e o meu jeito (pausa de efeito, risada, gesto, tom) preservado. *Porquê:* autenticidade é o que
+    separa o meu conteúdo do resto; edição genérica de IA o público reconhece e passa.
+17. **O sentido da minha fala é intocável.** Corte encurta, nunca muda o que eu quis dizer. *Porquê:* no tema polêmico,
+    uma fala fora de contexto vira crise; e a confiança do público é o meu ativo.
     leva o vídeo para fora dos meus seguidores.
 
 ---
